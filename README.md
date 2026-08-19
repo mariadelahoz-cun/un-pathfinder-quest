@@ -122,7 +122,6 @@ Cercano, directo, motivador, sin sonar corporativo ni acartonado.
 
 Nada de frases genéricas de marketing ("descubre tu potencial ilimitado"), preferible algo concreto y honesto sobre lo que el estudiante va a obtener.
 
-This project was built with [Lovable](https://lovable.dev).
 
 ## Build with Lovable
 
