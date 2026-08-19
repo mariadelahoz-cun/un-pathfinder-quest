@@ -21,7 +21,7 @@ export async function saveQuizResult(
       second_program_id: second?.program.id ?? null,
       second_program_name: second?.program.name ?? null,
       second_score: second?.affinity ?? null,
-      traits: profile as unknown as Record<string, unknown>,
+      traits: JSON.parse(JSON.stringify(profile)),
       answers: Object.fromEntries(
         Object.entries(answers).map(([key, value]) => [key, value.label]),
       ),
