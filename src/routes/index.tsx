@@ -41,13 +41,11 @@ function StepRenderer() {
   const step = quizSteps[stepIndex];
   if (!step) return null;
 
-  const handleAnswer = (answer: { label: string; vectors: never[] }) => answer;
-
   const onAnswer = (answer: Parameters<typeof answerStep>[1]) => {
     answerStep(step.id, answer);
     setTimeout(next, 420);
   };
-  void handleAnswer;
+
 
   return (
     <div className="space-y-6">

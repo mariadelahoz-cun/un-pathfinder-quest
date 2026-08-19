@@ -125,7 +125,7 @@ export function LeadForm({
       <Button
         type="submit"
         disabled={sending}
-        className="h-13 h-12 w-full rounded-2xl bg-accent-gradient text-base font-semibold text-accent-foreground hover:opacity-95"
+        className="h-12 w-full rounded-2xl bg-accent-gradient text-base font-semibold text-accent-foreground hover:opacity-95"
       >
         {sending ? <Loader2 className="size-5 animate-spin" /> : "Quiero que me contacten"}
       </Button>
