@@ -16,6 +16,8 @@ export type QuizAnswer = {
 
 export type Stage = "landing" | "quiz" | "processing" | "result" | "lead" | "done";
 
+export type QuizLead = { fullName: string; email: string };
+
 type QuizContextValue = {
   stage: Stage;
   setStage: (stage: Stage) => void;
@@ -31,6 +33,8 @@ type QuizContextValue = {
   ranking: MatchResult[];
   resultId: string | null;
   setResultId: (id: string | null) => void;
+  lead: QuizLead | null;
+  setLead: (lead: QuizLead) => void;
 };
 
 const QuizContext = createContext<QuizContextValue | null>(null);
@@ -40,6 +44,7 @@ export function QuizProvider({ children }: { children: ReactNode }) {
   const [stepIndex, setStepIndex] = useState(0);
   const [answers, setAnswers] = useState<Record<string, QuizAnswer>>({});
   const [resultId, setResultId] = useState<string | null>(null);
+  const [lead, setLead] = useState<QuizLead | null>(null);
 
   const answerStep = useCallback((stepId: string, answer: QuizAnswer) => {
     setAnswers((current) => ({ ...current, [stepId]: answer }));
@@ -68,6 +73,7 @@ export function QuizProvider({ children }: { children: ReactNode }) {
     setAnswers({});
     setStepIndex(0);
     setResultId(null);
+    setLead(null);
     setStage("landing");
   }, []);
 
@@ -94,8 +100,23 @@ export function QuizProvider({ children }: { children: ReactNode }) {
       ranking,
       resultId,
       setResultId,
+      lead,
+      setLead,
     }),
-    [stage, stepIndex, answers, answerStep, next, back, start, restart, profile, ranking, resultId],
+    [
+      stage,
+      stepIndex,
+      answers,
+      answerStep,
+      next,
+      back,
+      start,
+      restart,
+      profile,
+      ranking,
+      resultId,
+      lead,
+    ],
   );
 
   return <QuizContext.Provider value={value}>{children}</QuizContext.Provider>;

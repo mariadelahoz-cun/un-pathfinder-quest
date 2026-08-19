@@ -62,16 +62,23 @@ export function InterestMapStep({
           setDragging(null);
         }}
         className={cn(
-          "min-h-28 rounded-3xl border-2 border-dashed p-3 transition-colors duration-200",
+          "relative min-h-28 overflow-hidden rounded-3xl border-2 border-dashed p-3 transition-colors duration-200",
           isLike ? "border-accent/50 bg-accent/10" : "border-border bg-secondary/60",
           hoverZone === kind && "border-accent bg-accent/20",
         )}
       >
-        <p className="mb-2 flex items-center gap-2 text-sm font-semibold">
+        <Icon
+          className={cn(
+            "pointer-events-none absolute -bottom-3 -right-3 size-20 rotate-12",
+            isLike ? "text-accent/10" : "text-muted-foreground/10",
+          )}
+          aria-hidden
+        />
+        <p className="relative mb-2 flex items-center gap-2 text-sm font-semibold">
           <Icon className={cn("size-4", isLike ? "text-accent" : "text-muted-foreground")} />
           {isLike ? "Me gusta" : "No me gusta"}
         </p>
-        <div className="flex flex-wrap gap-2">
+        <div className="relative flex flex-wrap gap-2">
           {inZone.map((item) => {
             const ItemIcon = getIcon(item.icon);
             return (

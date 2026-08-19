@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { Building2, Check, Loader2, Mail, MapPin, Phone, Sparkles, User } from "lucide-react";
+import { Building2, Check, Loader2, MapPin, Phone, Sparkles } from "lucide-react";
 import { z } from "zod";
 import { toast } from "sonner";
 
@@ -8,20 +8,11 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { saveLead } from "@/lib/quiz-api";
 import type { Specialization } from "@/data/specializations";
+import type { QuizLead } from "@/context/quiz-context";
 import { cn } from "@/lib/utils";
 import { SpecializationAvatar } from "./SpecializationAvatar";
 
 const leadSchema = z.object({
-  fullName: z
-    .string()
-    .trim()
-    .min(3, { message: "Escribe tu nombre completo" })
-    .max(100, { message: "Máximo 100 caracteres" }),
-  email: z
-    .string()
-    .trim()
-    .email({ message: "Ese correo no parece válido" })
-    .max(255, { message: "Máximo 255 caracteres" }),
   phone: z
     .string()
     .trim()
@@ -39,21 +30,9 @@ type FieldErrors = Partial<Record<FieldName, string>>;
 const FIELDS: {
   name: FieldName;
   label: string;
-  icon: typeof User;
+  icon: typeof Phone;
   props: React.InputHTMLAttributes<HTMLInputElement>;
 }[] = [
-  {
-    name: "fullName",
-    label: "Nombre completo",
-    icon: User,
-    props: { placeholder: "María Fernanda Torres", maxLength: 100 },
-  },
-  {
-    name: "email",
-    label: "Correo",
-    icon: Mail,
-    props: { type: "email", placeholder: "tucorreo@ejemplo.com", maxLength: 255 },
-  },
   {
     name: "phone",
     label: "Celular",
@@ -69,17 +48,19 @@ const FIELDS: {
 ];
 
 export function LeadForm({
+  lead,
   resultId,
   specialization,
   affinity,
   onDone,
 }: {
+  lead: QuizLead;
   resultId: string | null;
   specialization: Specialization | undefined;
   affinity: number | undefined;
   onDone: () => void;
 }) {
-  const [values, setValues] = useState({ fullName: "", email: "", phone: "", city: "" });
+  const [values, setValues] = useState({ phone: "", city: "" });
   const [touched, setTouched] = useState<Partial<Record<FieldName, boolean>>>({});
   const [errors, setErrors] = useState<FieldErrors>({});
   const [sending, setSending] = useState(false);
@@ -107,13 +88,13 @@ export function LeadForm({
         if (!fieldErrors[key]) fieldErrors[key] = issue.message;
       });
       setErrors(fieldErrors);
-      setTouched({ fullName: true, email: true, phone: true, city: true });
+      setTouched({ phone: true, city: true });
       return;
     }
     setErrors({});
     setSending(true);
     try {
-      await saveLead({ resultId, ...parsed.data });
+      await saveLead({ resultId, fullName: lead.fullName, email: lead.email, ...parsed.data });
       setSent(true);
       onDone();
     } catch {
@@ -145,7 +126,8 @@ export function LeadForm({
         <p className="text-sm leading-relaxed text-muted-foreground">
           Un asesor académico te va a contactar para contarte más sobre{" "}
           <strong className="text-foreground">{programName}</strong>: fechas de inicio, costos,
-          becas y cómo se cursa. También te llega el resultado detallado a tu correo.
+          becas y cómo se cursa. También te llega el resultado detallado a{" "}
+          <strong className="text-foreground">{lead.email}</strong>.
         </p>
       </div>
     );
@@ -182,8 +164,9 @@ export function LeadForm({
       </div>
 
       <p className="relative text-sm text-muted-foreground">
-        Completa tus datos para desbloquear tu avatar de especialista y recibir el detalle de{" "}
-        <strong className="text-foreground">{programName}</strong>. Nada de spam.
+        Enviamos el detalle de <strong className="text-foreground">{programName}</strong> a{" "}
+        <strong className="text-foreground">{lead.email}</strong>. Solo nos falta esto para que un
+        asesor te contacte. Nada de spam.
       </p>
 
       <div className="relative space-y-1.5">

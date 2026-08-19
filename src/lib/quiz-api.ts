@@ -33,6 +33,15 @@ export async function saveQuizResult(
   return data.id as string;
 }
 
+/** Guarda una solicitud de brochure (nombre + correo), capturada al arranque. */
+export async function saveBrochureRequest(input: { fullName: string; email: string }) {
+  const { error } = await supabase.from("quiz_brochure_requests").insert({
+    full_name: input.fullName,
+    email: input.email,
+  });
+  if (error) throw error;
+}
+
 /** Guarda los datos de contacto del prospecto ligados a su resultado. */
 export async function saveLead(input: {
   resultId: string | null;

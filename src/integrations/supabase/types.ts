@@ -14,6 +14,27 @@ export type Database = {
   }
   public: {
     Tables: {
+      quiz_brochure_requests: {
+        Row: {
+          created_at: string
+          email: string
+          full_name: string
+          id: string
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          full_name: string
+          id?: string
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          full_name?: string
+          id?: string
+        }
+        Relationships: []
+      }
       quiz_leads: {
         Row: {
           city: string

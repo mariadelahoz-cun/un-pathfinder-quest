@@ -33,6 +33,8 @@ type Stats = {
   leads: number;
   top: { name: string; count: number }[];
   recentLeads: { full_name: string; city: string; created_at: string }[];
+  brochureRequests: number;
+  recentBrochureRequests: { full_name: string; email: string; created_at: string }[];
 };
 
 function AdminPage() {
@@ -69,11 +71,16 @@ function AdminPage() {
       }
       setIsAdmin(true);
 
-      const [results, leads] = await Promise.all([
+      const [results, leads, brochureRequests] = await Promise.all([
         supabase.from("quiz_results").select("top_program_name, created_at"),
         supabase
           .from("quiz_leads")
           .select("full_name, city, created_at")
+          .order("created_at", { ascending: false })
+          .limit(20),
+        supabase
+          .from("quiz_brochure_requests")
+          .select("full_name, email, created_at")
           .order("created_at", { ascending: false })
           .limit(20),
       ]);
@@ -91,6 +98,8 @@ function AdminPage() {
           .map(([name, count]) => ({ name, count }))
           .sort((a, b) => b.count - a.count),
         recentLeads: leads.data ?? [],
+        brochureRequests: brochureRequests.data?.length ?? 0,
+        recentBrochureRequests: brochureRequests.data ?? [],
       });
       setLoading(false);
     })();
@@ -136,7 +145,7 @@ function AdminPage() {
           </div>
         ) : (
           <>
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
               <div className="rounded-3xl border border-accent/40 bg-accent/10 p-5">
                 <p className="text-3xl font-bold text-accent">{stats?.completions ?? 0}</p>
                 <p className="text-sm text-muted-foreground">Retos completados</p>
@@ -144,6 +153,10 @@ function AdminPage() {
               <div className="rounded-3xl border border-border/70 bg-card p-5">
                 <p className="text-3xl font-bold">{stats?.leads ?? 0}</p>
                 <p className="text-sm text-muted-foreground">Prospectos registrados</p>
+              </div>
+              <div className="rounded-3xl border border-border/70 bg-card p-5">
+                <p className="text-3xl font-bold">{stats?.brochureRequests ?? 0}</p>
+                <p className="text-sm text-muted-foreground">Solicitudes de brochure</p>
               </div>
             </div>
 
@@ -170,6 +183,29 @@ function AdminPage() {
                 </ul>
               ) : (
                 <p className="text-sm text-muted-foreground">Todavía no hay resultados.</p>
+              )}
+            </section>
+
+            <section className="rounded-3xl border border-border/70 bg-card p-5">
+              <h2 className="mb-3 font-semibold">Últimas solicitudes de brochure</h2>
+              {stats?.recentBrochureRequests.length ? (
+                <ul className="divide-y divide-border/60 text-sm">
+                  {stats.recentBrochureRequests.map((request) => (
+                    <li
+                      key={`${request.email}-${request.created_at}`}
+                      className="flex justify-between gap-3 py-2.5"
+                    >
+                      <span className="min-w-0 truncate">{request.full_name}</span>
+                      <span className="shrink-0 truncate text-muted-foreground">
+                        {request.email}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <p className="text-sm text-muted-foreground">
+                  Todavía no hay solicitudes de brochure.
+                </p>
               )}
             </section>
 

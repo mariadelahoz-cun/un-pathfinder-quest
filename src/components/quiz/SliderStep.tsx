@@ -49,7 +49,7 @@ export function SliderStep({
         max={100}
         step={1}
         aria-label="Deslizador de perfil"
-        className="[&_[data-slot=slider-range]]:bg-accent [&_[data-slot=slider-thumb]]:size-6 [&_[data-slot=slider-thumb]]:border-accent [&_[data-slot=slider-thumb]]:bg-accent [&_[data-slot=slider-track]]:h-2.5 [&_[data-slot=slider-track]]:bg-secondary"
+        className="[&_[data-slot=slider-range]]:bg-accent-gradient [&_[data-slot=slider-thumb]]:size-6 [&_[data-slot=slider-thumb]]:border-accent [&_[data-slot=slider-thumb]]:bg-accent [&_[data-slot=slider-thumb]]:shadow-glow [&_[data-slot=slider-track]]:h-2.5 [&_[data-slot=slider-track]]:bg-gradient-to-r [&_[data-slot=slider-track]]:from-secondary [&_[data-slot=slider-track]]:via-accent/15 [&_[data-slot=slider-track]]:to-secondary"
       />
       <div className="mt-4 text-center text-sm text-muted-foreground">
         {value < 35

@@ -1,11 +1,8 @@
 import { useEffect, useState } from "react";
 
-const messages = [
-  "Leyendo tus respuestas...",
-  "Cruzando tu perfil con los posgrados de CUN...",
-  "Ordenando por afinidad...",
-  "Listo. Mira esto.",
-];
+import { GUIDE_MESSAGES } from "@/data/guide-messages";
+
+const messages = GUIDE_MESSAGES.processing;
 
 export function Processing({ onDone }: { onDone: () => void }) {
   const [index, setIndex] = useState(0);
@@ -30,12 +27,7 @@ export function Processing({ onDone }: { onDone: () => void }) {
           {Math.min(25 * (index + 1), 100)}%
         </div>
       </div>
-      <div className="space-y-2">
-        <p className="font-display text-3xl text-accent">Armando tu perfil</p>
-        <p key={index} className="animate-step-in text-base text-muted-foreground">
-          {messages[index]}
-        </p>
-      </div>
+      <p className="font-display text-3xl text-accent">Armando tu perfil</p>
     </div>
   );
 }

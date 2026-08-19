@@ -22,7 +22,7 @@ export function CardsStep({
 
   return (
     <div className="grid gap-3 sm:grid-cols-2">
-      {options.map((option) => {
+      {options.map((option, index) => {
         const Icon = getIcon(option.icon);
         const isSelected = selected === option.id;
         return (
@@ -30,8 +30,9 @@ export function CardsStep({
             key={option.id}
             type="button"
             onClick={() => choose(option)}
+            style={{ animationDelay: `${index * 70}ms` }}
             className={cn(
-              "group flex items-center gap-4 rounded-3xl border border-border/70 bg-card p-4 text-left transition-all duration-300",
+              "group animate-step-in flex items-center gap-4 rounded-3xl border border-border/70 bg-card p-4 text-left transition-all duration-300",
               "hover:-translate-y-0.5 hover:border-accent/70 hover:shadow-soft active:scale-[0.99]",
               isSelected &&
                 "animate-pop border-accent bg-accent/15 ring-2 ring-accent/70 ring-offset-2 ring-offset-background",
@@ -39,9 +40,9 @@ export function CardsStep({
           >
             <span
               className={cn(
-                "flex size-12 shrink-0 items-center justify-center rounded-2xl bg-secondary text-accent transition-colors duration-300",
-                "group-hover:bg-accent/20",
-                isSelected && "bg-accent text-accent-foreground",
+                "flex size-12 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-accent/25 to-accent/5 text-accent shadow-sm transition-colors duration-300",
+                "group-hover:from-accent/40 group-hover:to-accent/10",
+                isSelected && "bg-none bg-accent text-accent-foreground",
               )}
             >
               <Icon className="size-6" aria-hidden />

@@ -4,6 +4,7 @@ import { ArrowLeft } from "lucide-react";
 
 import { QuizProvider, useQuiz } from "@/context/quiz-context";
 import { quizSteps } from "@/data/questions";
+import { GUIDE_MESSAGES } from "@/data/guide-messages";
 import { CardsStep } from "@/components/quiz/CardsStep";
 import { SliderStep } from "@/components/quiz/SliderStep";
 import { InterestMapStep } from "@/components/quiz/InterestMapStep";
@@ -12,6 +13,7 @@ import { Landing } from "@/components/quiz/Landing";
 import { Processing } from "@/components/quiz/Processing";
 import { ResultView } from "@/components/quiz/ResultView";
 import { LeadForm } from "@/components/quiz/LeadForm";
+import { JourneyMap } from "@/components/quiz/JourneyMap";
 import { saveQuizResult } from "@/lib/quiz-api";
 
 const title = "Descubre tu Especialización CUN | Reto Semana CUN";
@@ -36,40 +38,32 @@ export const Route = createFileRoute("/")({
   ),
 });
 
-function StepRenderer() {
-  const { stepIndex, totalSteps, answerStep, next, back } = useQuiz();
+function StepRenderer({ onReact }: { onReact: (message: string | null) => void }) {
+  const { stepIndex, answerStep, next, back } = useQuiz();
   const step = quizSteps[stepIndex];
   if (!step) return null;
 
   const onAnswer = (answer: Parameters<typeof answerStep>[1]) => {
     answerStep(step.id, answer);
-    setTimeout(next, 420);
+    const pool = GUIDE_MESSAGES.reacting;
+    onReact(pool[Math.floor(Math.random() * pool.length)] ?? pool[0]);
+    setTimeout(() => {
+      onReact(null);
+      next();
+    }, 650);
   };
 
   return (
     <div className="space-y-6">
-      <div className="space-y-3">
-        <div className="flex items-center justify-between text-sm">
-          <span className="font-semibold text-accent">
-            Pregunta {stepIndex + 1} de {totalSteps}
-          </span>
-          {stepIndex > 0 ? (
-            <button
-              type="button"
-              onClick={back}
-              className="flex items-center gap-1 text-muted-foreground transition-colors hover:text-foreground"
-            >
-              <ArrowLeft className="size-4" /> Atrás
-            </button>
-          ) : null}
-        </div>
-        <div className="h-2 w-full overflow-hidden rounded-full bg-secondary">
-          <div
-            className="h-full rounded-full bg-accent-gradient transition-[width] duration-500"
-            style={{ width: `${((stepIndex + 1) / totalSteps) * 100}%` }}
-          />
-        </div>
-      </div>
+      {stepIndex > 0 ? (
+        <button
+          type="button"
+          onClick={back}
+          className="flex items-center gap-1 text-sm text-muted-foreground transition-colors hover:text-foreground"
+        >
+          <ArrowLeft className="size-4" /> Atrás
+        </button>
+      ) : null}
 
       <div key={step.id} className="animate-step-in space-y-4">
         <div className="space-y-1.5">
@@ -99,9 +93,10 @@ function StepRenderer() {
 }
 
 function RetoPage() {
-  const { stage, setStage, start, restart, ranking, profile, answers, resultId, setResultId } =
+  const { stage, setStage, restart, ranking, profile, answers, resultId, setResultId, lead } =
     useQuiz();
   const [saving, setSaving] = useState(false);
+  const [reaction, setReaction] = useState<string | null>(null);
 
   const finishProcessing = useCallback(() => setStage("result"), [setStage]);
 
@@ -116,17 +111,29 @@ function RetoPage() {
   }, [stage, resultId, saving, ranking, profile, answers, setResultId]);
 
   return (
-    <main className="bg-hero min-h-screen px-4 pb-16 pt-6">
-      <div className="mx-auto w-full max-w-xl">
-        {stage === "landing" ? <Landing onStart={start} /> : null}
-        {stage === "quiz" ? <StepRenderer /> : null}
+    <main className="bg-hero relative min-h-screen overflow-hidden px-4 pb-16 pt-6">
+      <div
+        className="pointer-events-none absolute inset-0 opacity-[0.06]"
+        style={{
+          backgroundImage: "radial-gradient(currentColor 1.5px, transparent 1.5px)",
+          backgroundSize: "26px 26px",
+          color: "var(--accent)",
+        }}
+        aria-hidden
+      />
+      <div className="relative mx-auto w-full max-w-xl">
+        <JourneyMap reaction={reaction} />
+
+        {stage === "landing" ? <Landing /> : null}
+        {stage === "quiz" ? <StepRenderer onReact={setReaction} /> : null}
         {stage === "processing" ? <Processing onDone={finishProcessing} /> : null}
         {stage === "result" ? (
           <ResultView ranking={ranking} profile={profile} onContinue={() => setStage("lead")} />
         ) : null}
-        {stage === "lead" || stage === "done" ? (
+        {(stage === "lead" || stage === "done") && lead ? (
           <div className="space-y-5">
             <LeadForm
+              lead={lead}
               resultId={resultId}
               specialization={ranking[0]?.program}
               affinity={ranking[0]?.affinity}

@@ -41,6 +41,9 @@ export function WheelStep({
       {revealed === null ? (
         <div className="flex flex-col items-center gap-6 rounded-3xl border border-border/70 bg-card p-6">
           <div className="relative">
+            {spinning ? (
+              <span className="absolute inset-0 -z-10 animate-pulse rounded-full bg-accent/30 blur-xl" />
+            ) : null}
             <span className="absolute -top-2 left-1/2 z-10 -translate-x-1/2 text-accent">▼</span>
             <div
               className="size-48 rounded-full border-4 border-accent/70 shadow-soft sm:size-56"
