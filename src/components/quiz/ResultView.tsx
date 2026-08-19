@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { buildReasons, type MatchResult, type Profile } from "@/lib/matching";
 import { buildStoryCard } from "@/lib/share-card";
 import { cn } from "@/lib/utils";
+import { SpecializationAvatar } from "./SpecializationAvatar";
 
 function Confetti() {
   const pieces = Array.from({ length: 24 }, (_, index) => index);
@@ -87,22 +88,29 @@ export function ResultView({
           revealed ? "animate-reveal" : "opacity-0",
         )}
       >
-        <p className="text-xs font-semibold uppercase tracking-wide text-accent">Tu match es</p>
-        <h1 className="mt-2 text-2xl font-semibold leading-tight sm:text-3xl">{top.program.name}</h1>
-        <p className="mt-2 text-sm text-muted-foreground">{top.program.tagline}</p>
-
-        <div className="mt-5 flex items-center gap-4">
-          <div className="flex size-20 shrink-0 items-center justify-center rounded-full bg-accent-gradient text-xl font-bold text-accent-foreground">
-            {top.affinity}%
+        <div className="flex flex-col items-center gap-3 text-center">
+          <SpecializationAvatar
+            specialization={top.program}
+            affinity={revealed ? top.affinity : 0}
+            size="lg"
+            className="animate-pop"
+          />
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-wide text-accent">Tu match es</p>
+            <h1 className="mt-1 text-2xl font-semibold leading-tight sm:text-3xl">
+              {top.program.name}
+            </h1>
+            <p className="mt-2 text-sm text-muted-foreground">{top.program.tagline}</p>
           </div>
-          <div className="min-w-0 flex-1">
-            <p className="text-sm font-medium">Afinidad con tu perfil</p>
-            <div className="mt-2 h-2.5 w-full overflow-hidden rounded-full bg-secondary">
-              <div
-                className="h-full rounded-full bg-accent-gradient transition-[width] duration-1000"
-                style={{ width: revealed ? `${top.affinity}%` : "0%" }}
-              />
-            </div>
+        </div>
+
+        <div className="mt-5">
+          <p className="text-sm font-medium">Afinidad con tu perfil</p>
+          <div className="mt-2 h-2.5 w-full overflow-hidden rounded-full bg-secondary">
+            <div
+              className="h-full rounded-full bg-accent-gradient transition-[width] duration-1000"
+              style={{ width: revealed ? `${top.affinity}%` : "0%" }}
+            />
           </div>
         </div>
 
@@ -159,8 +167,9 @@ export function ResultView({
           <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
             También te podría interesar
           </p>
-          <div className="mt-2 flex items-center justify-between gap-4">
-            <div className="min-w-0">
+          <div className="mt-2 flex items-center gap-4">
+            <SpecializationAvatar specialization={second.program} size="sm" locked />
+            <div className="min-w-0 flex-1">
               <p className="font-medium leading-snug">{second.program.name}</p>
               <p className="mt-1 text-sm text-muted-foreground">{second.program.tagline}</p>
             </div>

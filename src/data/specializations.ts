@@ -42,6 +42,10 @@ export type Specialization = {
   modality: string;
   curriculum: string[];
   vector: ScoreVector;
+  /** Ícono del avatar de recompensa (clave de src/components/quiz/icon-map.ts). */
+  avatarIcon: string;
+  /** Par de colores (inicio, fin) del degradado del avatar de recompensa. */
+  avatarColors: [string, string];
 };
 
 export const specializations: Specialization[] = [
@@ -67,6 +71,8 @@ export const specializations: Specialization[] = [
       interests: { gestion: 5, operaciones: 4, finanzas: 2, tecnologia: 2 },
       goals: { ascender: 5, profundizar: 3, emprender: 2, cambiar_carrera: 2 },
     },
+    avatarIcon: "target",
+    avatarColors: ["#FFD166", "#84BD00"],
   },
   {
     id: "gerencia-talento-humano",
@@ -90,6 +96,8 @@ export const specializations: Specialization[] = [
       interests: { gestion: 4, educacion: 3, comunicacion: 3, innovacion_social: 3 },
       goals: { ascender: 4, profundizar: 4, cambiar_carrera: 3, emprender: 1 },
     },
+    avatarIcon: "users",
+    avatarColors: ["#84BD00", "#3FA796"],
   },
   {
     id: "gerencia-financiera",
@@ -113,6 +121,8 @@ export const specializations: Specialization[] = [
       interests: { finanzas: 5, gestion: 4, tecnologia: 2, operaciones: 2 },
       goals: { ascender: 4, emprender: 4, profundizar: 4, cambiar_carrera: 1 },
     },
+    avatarIcon: "coins",
+    avatarColors: ["#F2C94C", "#5B8C3A"],
   },
   {
     id: "gerencia-marketing-digital",
@@ -136,6 +146,8 @@ export const specializations: Specialization[] = [
       interests: { comunicacion: 5, tecnologia: 3, gestion: 3, finanzas: 1 },
       goals: { emprender: 5, cambiar_carrera: 3, ascender: 3, profundizar: 2 },
     },
+    avatarIcon: "megaphone",
+    avatarColors: ["#FF8C6B", "#84BD00"],
   },
   {
     id: "gerencia-ti",
@@ -159,6 +171,8 @@ export const specializations: Specialization[] = [
       interests: { tecnologia: 5, gestion: 3, operaciones: 3 },
       goals: { ascender: 5, profundizar: 4, cambiar_carrera: 2, emprender: 2 },
     },
+    avatarIcon: "cpu",
+    avatarColors: ["#4FD1C5", "#2E7D32"],
   },
   {
     id: "pedagogia-docencia",
@@ -182,6 +196,8 @@ export const specializations: Specialization[] = [
       interests: { educacion: 5, comunicacion: 3, innovacion_social: 3, tecnologia: 2 },
       goals: { cambiar_carrera: 4, profundizar: 4, ascender: 2, emprender: 2 },
     },
+    avatarIcon: "graduation",
+    avatarColors: ["#B7E778", "#5B8C3A"],
   },
   {
     id: "seguridad-salud-trabajo",
@@ -205,6 +221,8 @@ export const specializations: Specialization[] = [
       interests: { salud_trabajo: 5, operaciones: 4, gestion: 3, innovacion_social: 2 },
       goals: { profundizar: 4, ascender: 4, cambiar_carrera: 3, emprender: 2 },
     },
+    avatarIcon: "shield",
+    avatarColors: ["#84BD00", "#1F5E33"],
   },
   {
     id: "gerencia-logistica",
@@ -212,8 +230,7 @@ export const specializations: Specialization[] = [
     tagline: "Para quien disfruta que la cadena entera funcione sin ruido",
     description:
       "Optimizas abastecimiento, inventarios, transporte y distribución con indicadores y tecnología, pensando en costos reales y en servicio al cliente.",
-    audience:
-      "Profesionales de operaciones, comercio exterior, producción y compras.",
+    audience: "Profesionales de operaciones, comercio exterior, producción y compras.",
     duration: "2 semestres",
     modality: "Virtual",
     curriculum: [
@@ -228,6 +245,8 @@ export const specializations: Specialization[] = [
       interests: { operaciones: 5, gestion: 4, tecnologia: 2, finanzas: 2 },
       goals: { ascender: 4, profundizar: 4, emprender: 3, cambiar_carrera: 2 },
     },
+    avatarIcon: "truck",
+    avatarColors: ["#8FD3F4", "#5B8C3A"],
   },
   {
     id: "gestion-social-emprendimiento",
@@ -235,8 +254,7 @@ export const specializations: Specialization[] = [
     tagline: "Para quien quiere que su proyecto deje algo más que utilidades",
     description:
       "Formulas proyectos con impacto social medible: diagnóstico de territorio, modelos de negocio sostenibles, cooperación y evaluación de resultados.",
-    audience:
-      "Líderes comunitarios, gestores públicos, fundaciones y emprendedores de impacto.",
+    audience: "Líderes comunitarios, gestores públicos, fundaciones y emprendedores de impacto.",
     duration: "2 semestres",
     modality: "Virtual",
     curriculum: [
@@ -251,6 +269,8 @@ export const specializations: Specialization[] = [
       interests: { innovacion_social: 5, gestion: 3, comunicacion: 3, educacion: 2 },
       goals: { emprender: 5, cambiar_carrera: 3, profundizar: 2, ascender: 2 },
     },
+    avatarIcon: "heart",
+    avatarColors: ["#FF8C6B", "#5B8C3A"],
   },
 ];
 

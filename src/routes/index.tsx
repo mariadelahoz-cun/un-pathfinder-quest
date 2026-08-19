@@ -46,7 +46,6 @@ function StepRenderer() {
     setTimeout(next, 420);
   };
 
-
   return (
     <div className="space-y-6">
       <div className="space-y-3">
@@ -129,7 +128,8 @@ function RetoPage() {
           <div className="space-y-5">
             <LeadForm
               resultId={resultId}
-              programName={ranking[0]?.program.name ?? "tu especialización"}
+              specialization={ranking[0]?.program}
+              affinity={ranking[0]?.affinity}
               onDone={() => setStage("done")}
             />
             <button
