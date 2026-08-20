@@ -89,7 +89,7 @@ export const specializations: Specialization[] = [
     audience:
       "Diseñadores, administradores y emprendedores del sector moda y textil que quieren liderar marcas o unidades de negocio.",
     duration: "2 semestres",
-    modality: "Virtual y presencial (según sede)",
+    modality: "Virtual",
     curriculum: [
       "Gerencia de marca y producto de moda",
       "Cadena de abastecimiento textil",
@@ -363,7 +363,7 @@ export const specializations: Specialization[] = [
     audience:
       "Profesionales de cualquier área que ya coordinan equipos o entregables y quieren hacerlo con método.",
     duration: "2 semestres",
-    modality: "Virtual y presencial (según sede)",
+    modality: "Virtual",
     curriculum: [
       "Fundamentos y ciclo de vida del proyecto",
       "Costos, tiempos y gestión del riesgo",
@@ -388,7 +388,7 @@ export const specializations: Specialization[] = [
     audience:
       "Contadores, administradores, economistas y emprendedores que manejan plata ajena o propia.",
     duration: "2 semestres",
-    modality: "Virtual y presencial (según sede)",
+    modality: "Virtual",
     curriculum: [
       "Diagnóstico y planeación financiera",
       "Valoración de empresas",
@@ -437,7 +437,7 @@ export const specializations: Specialization[] = [
       "Desarrollas visión estratégica integral: liderazgo, finanzas, mercadeo y operaciones para asumir posiciones de alta dirección.",
     audience: "Profesionales con experiencia en liderazgo que aspiran a cargos de alta dirección.",
     duration: "2 semestres",
-    modality: "Virtual y presencial (según sede)",
+    modality: "Virtual",
     curriculum: [
       "Pensamiento estratégico",
       "Liderazgo de alto nivel",
@@ -462,7 +462,7 @@ export const specializations: Specialization[] = [
     audience:
       "Ingenieros y profesionales del sector energético e industrial interesados en la transición energética.",
     duration: "2 semestres",
-    modality: "Virtual y presencial (según sede)",
+    modality: "Virtual",
     curriculum: [
       "Fundamentos de transición energética",
       "Energías renovables y eficiencia",
@@ -487,7 +487,7 @@ export const specializations: Specialization[] = [
     audience:
       "Diseñadores, ingenieros y gestores de la cadena textil-moda que buscan innovar en su sector.",
     duration: "2 semestres",
-    modality: "Virtual y presencial (según sede)",
+    modality: "Virtual",
     curriculum: [
       "Innovación en el sistema moda",
       "Sostenibilidad y materiales",
@@ -512,7 +512,7 @@ export const specializations: Specialization[] = [
     audience:
       "Profesionales de salud, ingeniería y administración que lideran o quieren liderar áreas de SST.",
     duration: "2 semestres",
-    modality: "Virtual y presencial (según sede)",
+    modality: "Virtual",
     curriculum: [
       "Marco legal del SG-SST",
       "Identificación de peligros y control de riesgos",
