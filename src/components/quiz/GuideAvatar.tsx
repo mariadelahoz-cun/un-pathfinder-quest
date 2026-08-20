@@ -6,20 +6,20 @@ import { cn } from "@/lib/utils";
 // con transparencia real, sin fondo. No requieren canvas/WASM: es solo
 // cambiar el src de una <img>, así que no depende de que cargue ningún
 // runtime aparte.
-import idleSprite from "@/assets/guide-sprites/character_malePerson_idle.png";
-import talkSprite from "@/assets/guide-sprites/character_malePerson_talk.png";
-import thinkSprite from "@/assets/guide-sprites/character_malePerson_think.png";
-import cheer0Sprite from "@/assets/guide-sprites/character_malePerson_cheer0.png";
-import cheer1Sprite from "@/assets/guide-sprites/character_malePerson_cheer1.png";
-import jumpSprite from "@/assets/guide-sprites/character_malePerson_jump.png";
-import walk0Sprite from "@/assets/guide-sprites/character_malePerson_walk0.png";
-import walk1Sprite from "@/assets/guide-sprites/character_malePerson_walk1.png";
-import walk2Sprite from "@/assets/guide-sprites/character_malePerson_walk2.png";
-import walk3Sprite from "@/assets/guide-sprites/character_malePerson_walk3.png";
-import walk4Sprite from "@/assets/guide-sprites/character_malePerson_walk4.png";
-import walk5Sprite from "@/assets/guide-sprites/character_malePerson_walk5.png";
-import walk6Sprite from "@/assets/guide-sprites/character_malePerson_walk6.png";
-import walk7Sprite from "@/assets/guide-sprites/character_malePerson_walk7.png";
+import idleSprite from "@/assets/guide-sprites/character_robot_idle.png";
+import talkSprite from "@/assets/guide-sprites/character_robot_talk.png";
+import thinkSprite from "@/assets/guide-sprites/character_robot_think.png";
+import cheer0Sprite from "@/assets/guide-sprites/character_robot_cheer0.png";
+import cheer1Sprite from "@/assets/guide-sprites/character_robot_cheer1.png";
+import jumpSprite from "@/assets/guide-sprites/character_robot_jump.png";
+import walk0Sprite from "@/assets/guide-sprites/character_robot_walk0.png";
+import walk1Sprite from "@/assets/guide-sprites/character_robot_walk1.png";
+import walk2Sprite from "@/assets/guide-sprites/character_robot_walk2.png";
+import walk3Sprite from "@/assets/guide-sprites/character_robot_walk3.png";
+import walk4Sprite from "@/assets/guide-sprites/character_robot_walk4.png";
+import walk5Sprite from "@/assets/guide-sprites/character_robot_walk5.png";
+import walk6Sprite from "@/assets/guide-sprites/character_robot_walk6.png";
+import walk7Sprite from "@/assets/guide-sprites/character_robot_walk7.png";
 
 export type GuideMood = "greeting" | "idle" | "curious" | "reacting" | "thinking" | "celebrating";
 

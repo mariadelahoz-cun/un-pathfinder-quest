@@ -91,7 +91,9 @@ export function JourneyMap({ reaction }: { reaction: string | null }) {
     }
   }
 
-  const characterSize = stage === "landing" || stage === "result" ? "lg" : "sm";
+  // Mismo tamaño en todo el reto (el que ya se usaba en las preguntas),
+  // en vez de crecer en landing/resultado — consistencia visual pedida.
+  const characterSize = "sm";
   const travelDurationMs = stage === "processing" ? 3400 : 700;
   const total = NODE_ICONS.length;
 
