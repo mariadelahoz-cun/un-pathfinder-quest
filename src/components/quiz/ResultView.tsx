@@ -84,11 +84,20 @@ export function ResultView({
 
       <div
         className={cn(
-          "rounded-3xl border border-accent/50 bg-card p-6 shadow-soft",
+          "relative overflow-hidden rounded-3xl border border-accent/50 bg-card p-6 shadow-soft",
           revealed ? "animate-reveal" : "opacity-0",
         )}
       >
-        <div className="flex flex-col items-center gap-3 text-center">
+        <div
+          className="pointer-events-none absolute -right-16 -top-16 size-48 rounded-full bg-accent-gradient opacity-15 blur-2xl animate-float-slow"
+          aria-hidden
+        />
+        <div
+          className="pointer-events-none absolute -bottom-20 -left-14 size-40 rounded-full bg-primary opacity-15 blur-2xl animate-float-slow"
+          style={{ animationDelay: "-3s" }}
+          aria-hidden
+        />
+        <div className="relative flex flex-col items-center gap-3 text-center">
           <SpecializationAvatar
             specialization={top.program}
             affinity={revealed ? top.affinity : 0}

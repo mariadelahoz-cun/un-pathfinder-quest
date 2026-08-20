@@ -64,10 +64,8 @@
   --animate-pop: pop 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) both;
   --animate-float-slow: float-slow 6s ease-in-out infinite;
   --animate-confetti: confetti 2.6s ease-in forwards;
-  --animate-blink: blink 4.5s ease-in-out infinite;
-  --animate-walk-phase-a: walk-phase-a 0.55s ease-in-out infinite;
-  --animate-walk-phase-b: walk-phase-b 0.55s ease-in-out infinite;
-  --animate-walk-bob: walk-bob 0.55s ease-in-out infinite;
+  --animate-guide-pulse: guide-pulse 2.2s ease-in-out infinite;
+  --animate-guide-tilt: guide-tilt 2.6s ease-in-out infinite;
 }
 
 :root {
@@ -184,44 +182,25 @@
   }
 }
 
-@keyframes blink {
+@keyframes guide-pulse {
   0%,
-  92%,
   100% {
-    transform: scaleY(1);
+    transform: scale(1);
+    opacity: 1;
   }
-  96% {
-    transform: scaleY(0.1);
+  50% {
+    transform: scale(0.96);
+    opacity: 0.85;
   }
 }
 
-@keyframes walk-phase-a {
+@keyframes guide-tilt {
   0%,
   100% {
-    transform: rotate(22deg);
+    transform: rotate(-4deg);
   }
   50% {
-    transform: rotate(-22deg);
-  }
-}
-
-@keyframes walk-phase-b {
-  0%,
-  100% {
-    transform: rotate(-22deg);
-  }
-  50% {
-    transform: rotate(22deg);
-  }
-}
-
-@keyframes walk-bob {
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-2.5px);
+    transform: rotate(4deg);
   }
 }
 

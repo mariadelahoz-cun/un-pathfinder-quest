@@ -5,7 +5,7 @@ import { quizSteps } from "@/data/questions";
 import { GUIDE_MESSAGES } from "@/data/guide-messages";
 import { cn } from "@/lib/utils";
 import { getIcon } from "./icon-map";
-import { GuideAvatar, type GuideMood } from "./GuideAvatar";
+import { GUIDE_SIZES, GuideAvatar, GuideBubble, type GuideMood } from "./GuideAvatar";
 
 /** Ícono del nodo del mapa por cada paso del reto (ver src/data/questions.ts). */
 const STEP_NODE_ICON: Record<string, string> = {
@@ -118,9 +118,9 @@ export function JourneyMap({ reaction }: { reaction: string | null }) {
 
   return (
     <div className="mb-6">
-      <div className="relative h-28 sm:h-32">
+      <div className="relative" style={{ height: GUIDE_SIZES[characterSize] }}>
         <div
-          className="absolute top-0 flex flex-col items-center"
+          className="absolute top-0"
           style={{
             left: `${((activeIndex + 0.5) / total) * 100}%`,
             transform: "translateX(-50%)",
@@ -130,13 +130,18 @@ export function JourneyMap({ reaction }: { reaction: string | null }) {
           <GuideAvatar
             mood={mood}
             size={characterSize}
-            message={message}
             layout="col"
             walking={walking}
             facing={direction === "backward" ? "left" : "right"}
           />
         </div>
       </div>
+
+      {message ? (
+        <div className="mb-3 flex justify-center px-2">
+          <GuideBubble message={message} layout="col" />
+        </div>
+      ) : null}
 
       <div className="relative pt-1">
         <div className="absolute left-4 right-4 top-1/2 -translate-y-1/2 border-t-2 border-dashed border-border/70" />

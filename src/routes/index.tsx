@@ -121,6 +121,20 @@ function RetoPage() {
         }}
         aria-hidden
       />
+      <div
+        className="animate-float-slow pointer-events-none absolute -left-24 -top-16 size-72 rounded-full bg-accent opacity-[0.14] blur-3xl"
+        aria-hidden
+      />
+      <div
+        className="animate-float-slow pointer-events-none absolute -right-20 top-1/3 size-80 rounded-full bg-primary opacity-[0.16] blur-3xl"
+        style={{ animationDelay: "-2.5s" }}
+        aria-hidden
+      />
+      <div
+        className="animate-float-slow pointer-events-none absolute -bottom-24 left-1/4 size-64 rounded-full bg-accent opacity-[0.12] blur-3xl"
+        style={{ animationDelay: "-4s" }}
+        aria-hidden
+      />
       <div className="relative mx-auto w-full max-w-xl">
         <JourneyMap reaction={reaction} />
 

@@ -22,7 +22,16 @@ export function Processing({ onDone }: { onDone: () => void }) {
     <div className="flex min-h-[70vh] flex-col items-center justify-center gap-8 text-center">
       <div className="relative flex size-40 items-center justify-center">
         <span className="absolute inset-0 animate-ping rounded-full bg-accent/20" />
-        <span className="absolute inset-4 rounded-full border-2 border-accent/40" />
+        <span className="absolute inset-4 rounded-full border-2 border-dashed border-accent/40" />
+        <span className="absolute -left-2 top-4 size-3 rounded-full bg-accent/50 animate-float-slow" />
+        <span
+          className="absolute -right-3 bottom-6 size-2.5 rounded-full bg-primary/60 animate-float-slow"
+          style={{ animationDelay: "-2s" }}
+        />
+        <span
+          className="absolute right-2 -top-3 size-2 rounded-full bg-accent/40 animate-float-slow"
+          style={{ animationDelay: "-4s" }}
+        />
         <div className="animate-float-slow flex size-24 items-center justify-center rounded-full bg-accent-gradient text-2xl font-bold text-accent-foreground">
           {Math.min(25 * (index + 1), 100)}%
         </div>
