@@ -146,6 +146,9 @@ export const INTEREST_LABELS: Record<Interest, string> = {
   finanzas: "finanzas",
   salud_trabajo: "seguridad y salud en el trabajo",
   operaciones: "operación y logística",
+  moda: "moda y diseño",
+  sector_publico: "Estado y sector público",
+  energia: "energía y sostenibilidad",
 };
 
 export const GOAL_LABELS: Record<Goal, string> = {

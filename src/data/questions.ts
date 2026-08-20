@@ -148,6 +148,24 @@ export const quizSteps: QuizStep[] = [
         icon: "heart",
         vector: { interests: { innovacion_social: 5 } },
       },
+      {
+        id: "moda",
+        label: "Moda y diseño",
+        icon: "shirt",
+        vector: { interests: { moda: 5 } },
+      },
+      {
+        id: "estado",
+        label: "Estado y sector público",
+        icon: "landmark",
+        vector: { interests: { sector_publico: 5 } },
+      },
+      {
+        id: "energia",
+        label: "Energía y sostenibilidad",
+        icon: "zap",
+        vector: { interests: { energia: 5 } },
+      },
     ],
   },
   {
