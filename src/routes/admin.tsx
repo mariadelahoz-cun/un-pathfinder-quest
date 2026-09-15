@@ -214,7 +214,10 @@ function AdminPage() {
               {stats?.recentLeads.length ? (
                 <ul className="divide-y divide-border/60 text-sm">
                   {stats.recentLeads.map((lead) => (
-                    <li key={`${lead.full_name}-${lead.created_at}`} className="flex justify-between gap-3 py-2.5">
+                    <li
+                      key={`${lead.full_name}-${lead.created_at}`}
+                      className="flex justify-between gap-3 py-2.5"
+                    >
                       <span className="min-w-0 truncate">{lead.full_name}</span>
                       <span className="shrink-0 text-muted-foreground">{lead.city}</span>
                     </li>
@@ -254,7 +257,8 @@ function SignIn() {
       toast.error(error.message);
       return;
     }
-    if (mode === "signup") toast.success("Cuenta creada. Revisa tu correo si se pide confirmación.");
+    if (mode === "signup")
+      toast.success("Cuenta creada. Revisa tu correo si se pide confirmación.");
   };
 
   return (

@@ -116,7 +116,9 @@ export function rankSpecializations(profile: Profile): MatchResult[] {
       program,
       raw,
       // Reescala el puntaje crudo al rango legible de afinidad.
-      affinity: Math.round(AFFINITY_FLOOR + ((raw - min) / span) * (AFFINITY_CEIL - AFFINITY_FLOOR)),
+      affinity: Math.round(
+        AFFINITY_FLOOR + ((raw - min) / span) * (AFFINITY_CEIL - AFFINITY_FLOOR),
+      ),
     }))
     .sort((a, b) => b.raw - a.raw);
 }
@@ -160,9 +162,7 @@ export const GOAL_LABELS: Record<Goal, string> = {
 
 /** Arma las frases de "por qué esta especialización" a partir del perfil. */
 export function buildReasons(profile: Profile, match: MatchResult): string[] {
-  const traits = topKeys(profile.traits, 2).map(
-    (key) => TRAIT_LABELS[key as Trait] ?? key,
-  );
+  const traits = topKeys(profile.traits, 2).map((key) => TRAIT_LABELS[key as Trait] ?? key);
   const interests = topKeys(profile.interests, 2).map(
     (key) => INTEREST_LABELS[key as Interest] ?? key,
   );
