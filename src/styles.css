@@ -118,7 +118,8 @@
   /* Superficies claras (tarjetas de contenido, formularios) */
   --surface: oklch(0.995 0.004 120);
   --surface-foreground: oklch(0.28 0.05 141);
-  --gradient-hero: radial-gradient(
+  --gradient-hero:
+    radial-gradient(
       120% 90% at 15% 0%,
       color-mix(in oklab, var(--accent) 22%, transparent),
       transparent 60%

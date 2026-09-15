@@ -226,8 +226,7 @@ export const quizSteps: QuizStep[] = [
       },
       {
         id: "rotacion",
-        situation:
-          "Tres personas clave renunciaron el mismo mes y el clima del área está pesado.",
+        situation: "Tres personas clave renunciaron el mismo mes y el clima del área está pesado.",
         options: [
           {
             id: "cultura",
