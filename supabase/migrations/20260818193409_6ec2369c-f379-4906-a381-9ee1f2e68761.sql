@@ -33,38 +33,3 @@ BEGIN
 END;
 $$;
 GRANT EXECUTE ON FUNCTION public.claim_admin() TO authenticated;
-
-CREATE TABLE public.quiz_results (
-  id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
-  created_at timestamptz NOT NULL DEFAULT now(),
-  top_program_id text NOT NULL,
-  top_program_name text NOT NULL,
-  top_score integer NOT NULL,
-  second_program_id text,
-  second_program_name text,
-  second_score integer,
-  traits jsonb NOT NULL DEFAULT '{}'::jsonb,
-  answers jsonb NOT NULL DEFAULT '{}'::jsonb
-);
-GRANT INSERT ON public.quiz_results TO anon, authenticated;
-GRANT SELECT ON public.quiz_results TO authenticated;
-GRANT ALL ON public.quiz_results TO service_role;
-ALTER TABLE public.quiz_results ENABLE ROW LEVEL SECURITY;
-CREATE POLICY "Anyone can save a quiz result" ON public.quiz_results FOR INSERT TO anon, authenticated WITH CHECK (true);
-CREATE POLICY "Admins can read quiz results" ON public.quiz_results FOR SELECT TO authenticated USING (public.has_role(auth.uid(), 'admin'));
-
-CREATE TABLE public.quiz_leads (
-  id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
-  created_at timestamptz NOT NULL DEFAULT now(),
-  result_id uuid REFERENCES public.quiz_results(id) ON DELETE SET NULL,
-  full_name text NOT NULL,
-  email text NOT NULL,
-  phone text NOT NULL,
-  city text NOT NULL
-);
-GRANT INSERT ON public.quiz_leads TO anon, authenticated;
-GRANT SELECT ON public.quiz_leads TO authenticated;
-GRANT ALL ON public.quiz_leads TO service_role;
-ALTER TABLE public.quiz_leads ENABLE ROW LEVEL SECURITY;
-CREATE POLICY "Anyone can submit their contact data" ON public.quiz_leads FOR INSERT TO anon, authenticated WITH CHECK (true);
-CREATE POLICY "Admins can read leads" ON public.quiz_leads FOR SELECT TO authenticated USING (public.has_role(auth.uid(), 'admin'));

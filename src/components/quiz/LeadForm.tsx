@@ -49,13 +49,11 @@ const FIELDS: {
 
 export function LeadForm({
   lead,
-  resultId,
   specialization,
   affinity,
   onDone,
 }: {
   lead: QuizLead;
-  resultId: string | null;
   specialization: Specialization | undefined;
   affinity: number | undefined;
   onDone: () => void;
@@ -94,7 +92,7 @@ export function LeadForm({
     setErrors({});
     setSending(true);
     try {
-      await saveLead({ resultId, fullName: lead.fullName, email: lead.email, ...parsed.data });
+      await saveLead(lead.id, parsed.data);
       setSent(true);
       onDone();
     } catch {

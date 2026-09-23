@@ -71,35 +71,36 @@ function AdminPage() {
       }
       setIsAdmin(true);
 
-      const [results, leads, brochureRequests] = await Promise.all([
-        supabase.from("quiz_results").select("top_program_name, created_at"),
-        supabase
-          .from("quiz_leads")
-          .select("full_name, city, created_at")
-          .order("created_at", { ascending: false })
-          .limit(20),
-        supabase
-          .from("quiz_brochure_requests")
-          .select("full_name, email, created_at")
-          .order("created_at", { ascending: false })
-          .limit(20),
-      ]);
+      // Todo vive en una sola tabla (students); se deriva todo lo demás en
+      // el cliente a partir de esa fila por estudiante.
+      const { data } = await supabase
+        .from("students")
+        .select("full_name, email, city, stage, top_program_name, created_at")
+        .order("created_at", { ascending: false });
       if (!active) return;
 
+      const rows = data ?? [];
+      const leadsRows = rows.filter((row) => row.stage === "lead");
+
       const counts = new Map<string, number>();
-      (results.data ?? []).forEach((row) => {
+      rows.forEach((row) => {
+        if (!row.top_program_name) return;
         counts.set(row.top_program_name, (counts.get(row.top_program_name) ?? 0) + 1);
       });
 
       setStats({
-        completions: results.data?.length ?? 0,
-        leads: leads.data?.length ?? 0,
+        completions: rows.filter((row) => row.top_program_name).length,
+        leads: leadsRows.length,
         top: [...counts.entries()]
           .map(([name, count]) => ({ name, count }))
           .sort((a, b) => b.count - a.count),
-        recentLeads: leads.data ?? [],
-        brochureRequests: brochureRequests.data?.length ?? 0,
-        recentBrochureRequests: brochureRequests.data ?? [],
+        recentLeads: leadsRows
+          .slice(0, 20)
+          .map((row) => ({ full_name: row.full_name, city: row.city ?? "—", created_at: row.created_at })),
+        brochureRequests: rows.length,
+        recentBrochureRequests: rows
+          .slice(0, 20)
+          .map((row) => ({ full_name: row.full_name, email: row.email, created_at: row.created_at })),
       });
       setLoading(false);
     })();

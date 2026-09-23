@@ -2,19 +2,39 @@ import { supabase } from "@/integrations/supabase/client";
 import type { QuizAnswer } from "@/context/quiz-context";
 import type { MatchResult, Profile } from "@/lib/matching";
 
-/** Guarda el resultado del reto (sin datos personales todavía). */
+/**
+ * Todo el recorrido de un estudiante vive en una sola fila de `students`
+ * (ver supabase/migrations/20260923100000_add_students.sql), identificada
+ * por un id generado en el cliente (crypto.randomUUID()) desde el momento
+ * en que deja nombre/correo en el landing. Las etapas siguientes solo
+ * actualizan esa misma fila — no crean filas nuevas.
+ */
+
+/** Crea la fila del estudiante al capturar nombre/correo en el landing. */
+export async function createStudent(input: { id: string; fullName: string; email: string }) {
+  const { error } = await supabase.from("students").insert({
+    id: input.id,
+    full_name: input.fullName,
+    email: input.email,
+    stage: "brochure",
+  });
+  if (error) throw error;
+}
+
+/** Guarda el resultado del reto en la fila del estudiante. */
 export async function saveQuizResult(
+  studentId: string,
   ranking: MatchResult[],
   profile: Profile,
   answers: Record<string, QuizAnswer>,
 ) {
   const top = ranking[0];
   const second = ranking[1];
-  if (!top) return null;
+  if (!top) return;
 
-  const { data, error } = await supabase
-    .from("quiz_results")
-    .insert({
+  const { error } = await supabase
+    .from("students")
+    .update({
       top_program_id: top.program.id,
       top_program_name: top.program.name,
       top_score: top.affinity,
@@ -25,37 +45,18 @@ export async function saveQuizResult(
       answers: Object.fromEntries(
         Object.entries(answers).map(([key, value]) => [key, value.label]),
       ),
+      stage: "result",
     })
-    .select("id")
-    .single();
+    .eq("id", studentId);
 
-  if (error) throw error;
-  return data.id as string;
-}
-
-/** Guarda una solicitud de brochure (nombre + correo), capturada al arranque. */
-export async function saveBrochureRequest(input: { fullName: string; email: string }) {
-  const { error } = await supabase.from("quiz_brochure_requests").insert({
-    full_name: input.fullName,
-    email: input.email,
-  });
   if (error) throw error;
 }
 
-/** Guarda los datos de contacto del prospecto ligados a su resultado. */
-export async function saveLead(input: {
-  resultId: string | null;
-  fullName: string;
-  email: string;
-  phone: string;
-  city: string;
-}) {
-  const { error } = await supabase.from("quiz_leads").insert({
-    result_id: input.resultId,
-    full_name: input.fullName,
-    email: input.email,
-    phone: input.phone,
-    city: input.city,
-  });
+/** Guarda teléfono/ciudad del estudiante para que un asesor lo contacte. */
+export async function saveLead(studentId: string, input: { phone: string; city: string }) {
+  const { error } = await supabase
+    .from("students")
+    .update({ phone: input.phone, city: input.city, stage: "lead" })
+    .eq("id", studentId);
   if (error) throw error;
 }

@@ -15,7 +15,7 @@ import {
 import heroImage from "@/assets/hero-reto-cun.png";
 import { quizSteps } from "@/data/questions";
 import { useQuiz } from "@/context/quiz-context";
-import { saveBrochureRequest } from "@/lib/quiz-api";
+import { createStudent } from "@/lib/quiz-api";
 import { cn } from "@/lib/utils";
 
 const brochureSchema = z.object({
@@ -54,11 +54,13 @@ export function Landing() {
       setTouched({ fullName: true, email: true });
       return;
     }
-    // No se espera la respuesta del servidor a propósito: todavía no hay
-    // envío de correo montado, y una llamada lenta o fallida no debe frenar
-    // el arranque del reto.
-    saveBrochureRequest(parsed.data).catch(() => undefined);
-    setLead(parsed.data);
+    // El id se genera en el cliente (no se espera al servidor) para poder
+    // arrancar el reto de inmediato y seguir usando el mismo id en las
+    // siguientes actualizaciones (resultado, teléfono/ciudad). Una llamada
+    // lenta o fallida no debe frenar el arranque del reto.
+    const id = crypto.randomUUID();
+    createStudent({ id, ...parsed.data }).catch(() => undefined);
+    setLead({ id, ...parsed.data });
     setOpen(false);
     start();
   };

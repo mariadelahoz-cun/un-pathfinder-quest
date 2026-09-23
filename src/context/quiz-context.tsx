@@ -16,7 +16,9 @@ export type QuizAnswer = {
 
 export type Stage = "landing" | "quiz" | "processing" | "result" | "lead" | "done";
 
-export type QuizLead = { fullName: string; email: string };
+/** `id` es la fila en `students` (Supabase) que se va completando durante
+ * todo el recorrido — ver src/lib/quiz-api.ts. */
+export type QuizLead = { id: string; fullName: string; email: string };
 
 type QuizContextValue = {
   stage: Stage;
@@ -31,8 +33,6 @@ type QuizContextValue = {
   restart: () => void;
   profile: Profile;
   ranking: MatchResult[];
-  resultId: string | null;
-  setResultId: (id: string | null) => void;
   lead: QuizLead | null;
   setLead: (lead: QuizLead) => void;
 };
@@ -43,7 +43,6 @@ export function QuizProvider({ children }: { children: ReactNode }) {
   const [stage, setStage] = useState<Stage>("landing");
   const [stepIndex, setStepIndex] = useState(0);
   const [answers, setAnswers] = useState<Record<string, QuizAnswer>>({});
-  const [resultId, setResultId] = useState<string | null>(null);
   const [lead, setLead] = useState<QuizLead | null>(null);
 
   const answerStep = useCallback((stepId: string, answer: QuizAnswer) => {
@@ -72,7 +71,6 @@ export function QuizProvider({ children }: { children: ReactNode }) {
   const restart = useCallback(() => {
     setAnswers({});
     setStepIndex(0);
-    setResultId(null);
     setLead(null);
     setStage("landing");
   }, []);
@@ -98,25 +96,10 @@ export function QuizProvider({ children }: { children: ReactNode }) {
       restart,
       profile,
       ranking,
-      resultId,
-      setResultId,
       lead,
       setLead,
     }),
-    [
-      stage,
-      stepIndex,
-      answers,
-      answerStep,
-      next,
-      back,
-      start,
-      restart,
-      profile,
-      ranking,
-      resultId,
-      lead,
-    ],
+    [stage, stepIndex, answers, answerStep, next, back, start, restart, profile, ranking, lead],
   );
 
   return <QuizContext.Provider value={value}>{children}</QuizContext.Provider>;

@@ -14,101 +14,60 @@ export type Database = {
   }
   public: {
     Tables: {
-      quiz_brochure_requests: {
-        Row: {
-          created_at: string
-          email: string
-          full_name: string
-          id: string
-        }
-        Insert: {
-          created_at?: string
-          email: string
-          full_name: string
-          id?: string
-        }
-        Update: {
-          created_at?: string
-          email?: string
-          full_name?: string
-          id?: string
-        }
-        Relationships: []
-      }
-      quiz_leads: {
-        Row: {
-          city: string
-          created_at: string
-          email: string
-          full_name: string
-          id: string
-          phone: string
-          result_id: string | null
-        }
-        Insert: {
-          city: string
-          created_at?: string
-          email: string
-          full_name: string
-          id?: string
-          phone: string
-          result_id?: string | null
-        }
-        Update: {
-          city?: string
-          created_at?: string
-          email?: string
-          full_name?: string
-          id?: string
-          phone?: string
-          result_id?: string | null
-        }
-        Relationships: [
-          {
-            foreignKeyName: "quiz_leads_result_id_fkey"
-            columns: ["result_id"]
-            isOneToOne: false
-            referencedRelation: "quiz_results"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      quiz_results: {
+      students: {
         Row: {
           answers: Json
+          city: string | null
           created_at: string
+          email: string
+          full_name: string
           id: string
+          phone: string | null
           second_program_id: string | null
           second_program_name: string | null
           second_score: number | null
-          top_program_id: string
-          top_program_name: string
-          top_score: number
+          stage: string
+          top_program_id: string | null
+          top_program_name: string | null
+          top_score: number | null
           traits: Json
+          updated_at: string
         }
         Insert: {
           answers?: Json
+          city?: string | null
           created_at?: string
+          email: string
+          full_name: string
           id?: string
+          phone?: string | null
           second_program_id?: string | null
           second_program_name?: string | null
           second_score?: number | null
-          top_program_id: string
-          top_program_name: string
-          top_score: number
+          stage?: string
+          top_program_id?: string | null
+          top_program_name?: string | null
+          top_score?: number | null
           traits?: Json
+          updated_at?: string
         }
         Update: {
           answers?: Json
+          city?: string | null
           created_at?: string
+          email?: string
+          full_name?: string
           id?: string
+          phone?: string | null
           second_program_id?: string | null
           second_program_name?: string | null
           second_score?: number | null
-          top_program_id?: string
-          top_program_name?: string
-          top_score?: number
+          stage?: string
+          top_program_id?: string | null
+          top_program_name?: string | null
+          top_score?: number | null
           traits?: Json
+          updated_at?: string
         }
         Relationships: []
       }

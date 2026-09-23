@@ -93,22 +93,27 @@ function StepRenderer({ onReact }: { onReact: (message: string | null) => void }
 }
 
 function RetoPage() {
-  const { stage, setStage, restart, ranking, profile, answers, resultId, setResultId, lead } =
-    useQuiz();
+  const { stage, setStage, restart, ranking, profile, answers, lead } = useQuiz();
   const [saving, setSaving] = useState(false);
+  const [resultSaved, setResultSaved] = useState(false);
   const [reaction, setReaction] = useState<string | null>(null);
 
   const finishProcessing = useCallback(() => setStage("result"), [setStage]);
 
-  // Guarda el resultado (sin datos personales) cuando se revela.
+  // Guarda el resultado en la fila del estudiante cuando se revela.
   useEffect(() => {
-    if (stage !== "result" || resultId || saving) return;
+    if (stage !== "result" || resultSaved || saving || !lead) return;
     setSaving(true);
-    saveQuizResult(ranking, profile, answers)
-      .then((id) => setResultId(id))
+    saveQuizResult(lead.id, ranking, profile, answers)
+      .then(() => setResultSaved(true))
       .catch(() => undefined)
       .finally(() => setSaving(false));
-  }, [stage, resultId, saving, ranking, profile, answers, setResultId]);
+  }, [stage, resultSaved, saving, lead, ranking, profile, answers]);
+
+  // Si se reinicia el reto, permite volver a guardar el resultado la próxima vez.
+  useEffect(() => {
+    if (stage === "landing") setResultSaved(false);
+  }, [stage]);
 
   return (
     <main className="bg-hero relative min-h-screen overflow-hidden px-4 pb-16 pt-6">
@@ -148,7 +153,6 @@ function RetoPage() {
           <div className="space-y-5">
             <LeadForm
               lead={lead}
-              resultId={resultId}
               specialization={ranking[0]?.program}
               affinity={ranking[0]?.affinity}
               onDone={() => setStage("done")}
